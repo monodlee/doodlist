@@ -9,15 +9,14 @@ var drawing_data = [];
 var user_drawings;
 
 io.sockets.on('connection', function(socket){
-	var user;
+	socket.emit('refresh', drawing_data);
 	socket.on('draw', function(point){
-		socket.broadcast.emit('draw', point);
+		io.sockets.emit('draw', point);
 		drawing_data.push(point);
 	});
 
 	socket.on('sign up', function(user_data){
 		user_data.friends = [];
-		user = user_data.username;
 		db.createUser(user_data.username, user_data, function(err, reply){
 			if(reply){
 				socket.emit('login', user_data);
@@ -45,16 +44,43 @@ io.sockets.on('connection', function(socket){
 							}
 						});
 						socket.emit('login', reply);
-						user = reply.username;
 					}
 				});
 			}
 			else{
-				console.log("failed login");
+				console.log("failed login", username);
 			}
 		});
 	});
 
+	socket.on('fb login', function(userId){
+		db.getUser(userId, function(err, reply){
+			if(reply !== null){
+				user_drawings = [];
+				db.getDrawingsbyUser(userId, function(err, reply){
+					if(reply.length>0){
+						var i;
+						for(i=0;i<reply.length-1;i++){
+							db.getDrawingbyID(reply[i], add_user_drawing);
+						}
+						db.getDrawingbyID(reply[reply.length-1], function(err, reply){
+							user_drawings.push(reply);
+							user_drawings.sort(function(a,b){return a.timestamp-b.timestamp;});
+							socket.emit('store drawings', user_drawings);
+						});
+					}
+				});
+				socket.emit('login', reply);
+			}
+			else{
+				db.createUser(userID, {username: userID, friends: []}, function(err, reply){
+					if(reply){
+						socket.emit('login', {username: userID, friends: []});
+					}
+				});
+			}
+		});
+	});
 	socket.on('undo', function(){
 		socket.broadcast.emit('undo', socket.id);
 		var i = drawing_data.length - 1;

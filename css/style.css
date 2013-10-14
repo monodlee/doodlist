@@ -6,23 +6,32 @@
   font-style: normal; }
 
 .login-dialog {
-  font-family: 'Flux';
+  display: none;
+  border: 5px solid black;
+  padding: 10px 0;
+  font-family: 'Flux', sans-serif;
   width: 600px;
-  height: 200px;
+  height: 150px;
   position: absolute;
   top: 50%;
-  margin-top: -100px;
+  margin-top: -90px;
   left: 50%;
   margin-left: -300px;
   text-align: center;
-  background: #109452;
   z-index: 15; }
+
+.login-dialog .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 30px; }
 
 .logout, .mini-login {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0; }
+  top: 2px;
+  left: 2px;
+  font-family: 'Flux', sans-serif; }
 
 .mini-login {
   display: block; }
@@ -104,7 +113,7 @@ h1 {
   word-wrap: normal;
   resize: none; }
 
-form input[type=submit] {
+.text-box input, .uploaded-images input, .archive-image input {
   position: absolute;
   float: right;
   top: 2px;
@@ -219,7 +228,7 @@ textarea:-o-input-placeholder {
 .upload, .save {
   width: 170px; }
 
-.color, .size, .undo, .clear, .bold, .italic, .underline, .font, .fit, .load {
+.color, .size, .bold, .italic, .underline, .font, .fit, .load {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
@@ -340,21 +349,15 @@ textarea:-o-input-placeholder {
 
 .clear, .undo {
   display: block;
-  width: 83px;
-  height: 44px;
-  margin: 10px auto;
-  border-top: solid 1px gray;
-  border-left: solid 1px gray;
-  font: bold 20px/44px Arial, sans-serif; }
+  height: 50px;
+  width: 50px;
+  margin: 0 auto; }
 
 .clear {
   margin-bottom: 5px; }
 
 .undo {
   margin-top: 5px; }
-
-.clear:visited, .undo:visited {
-  color: inherit; }
 
 .color:nth-child(1) {
   margin-left: 3px;
@@ -400,10 +403,6 @@ textarea:-o-input-placeholder {
   -webkit-box-shadow: 1px 2px 2px black inset;
   -moz-box-shadow: 1px 2px 2px black inset;
   box-shadow: 1px 2px 2px black inset; }
-
-.clear:active, .undo:active {
-  color: white;
-  background: black; }
 
 .color:active, .size:active {
   -o-transition: all .2s ease-in;

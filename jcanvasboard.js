@@ -39,24 +39,12 @@ $(document).ready(function() {
 		FB.Event.subscribe('auth.authResponseChange', function(response){
 			if (response.status === 'connected') {
 				// connected
-				$('.logout').show();
-				$('.fb-login-button').hide();
-				access_token = response.authResponse.accessToken;
-				console.log('fb login');
+				socket.emit('fb login', access_token.authResponse.userID);
 			} else if (response.status === 'not_authorized') {
 				// not_authorized
-				$('.logout').hide();
-				$('.mini-login').show();
-				$('.fb-login-button').show();
-				access_token = null;
-				console.log('fb not authorized');
+				alert('website not authorized by user');
 			} else {
 			// not_logged_in
-				$('.logout').hide();
-				$('.mini-login').show();
-				$('.fb-login-button').show();
-				access_token = null;
-				console.log('fb logout');
 			}
 		});
 	};
@@ -109,7 +97,7 @@ $(document).ready(function() {
 
 	function logout(){
 		user_data = undefined;
-		saved_drawings = undefined;
+		saved_drawings = {};
 		$('.logout').hide();
 		$('.mini-login').show();
 		$('.archive').html('');
@@ -249,37 +237,6 @@ $(document).ready(function() {
 		};
 		reader.readAsDataURL(file);
 	});
-
-	/*$('.fb-upload').click(function(e){
-		e.preventDefault();
-		if(user_album_data === undefined){
-			FB.login(function(response) {
-				// handle the response
-				FB.api('/me/albums?fields=id,name,cover_photo', generate_photo_browser(response));
-			}, {scope: 'user_photo,friends_photo'});
-		}
-		else{
-			generate_photo_browser(user_album_data);
-		}
-		
-				'<figure class="photo-preview" data-id=""><img src="" alt="Facebook Photo"><figcaption></figcaption></figure>'
-			});
-	
-	function generate_photo_browser(response){
-		FB.api('/','POST', {
-			'access_token': access_token,
-			'batch': [
-				{
-					'method': 'GET',
-					'relative_url':
-				}]
-		}, function(response){
-			$.each(response.data, function(index, image_data){
-			
-			});
-			$('.photo-browser').show();
-		});
-	}*/
 	
 	$('.image-box').submit( function(e){
 		e.preventDefault();
@@ -292,7 +249,7 @@ $(document).ready(function() {
 		image_data.id = socket.socket.sessionid;
 		socket.emit('draw', image_data);
 		socket.emit('draw', {src: 'filler', id: socket.socket.sessionid});
-		draw_image(image_data);
+		draw(image_data);
 		$(this).hide();
 	});
 
@@ -724,8 +681,6 @@ $(document).ready(function() {
 	
 	socket.on('login', function(data){
 		user_data = data;
-		list_friends();
-		console.log(user_data);
 		$('.mini-login').hide();
 		$('.logout').show();
 		$('.login-dialog').hide();
@@ -739,11 +694,6 @@ $(document).ready(function() {
 			$('.archive').prepend('<form class="archive-image"><img src="' + current_drawing.thumbnail + '" alt="Saved Image" width="168"><input type="submit" value="Delete"></form>');
 			$('.archive-image').first().show('slow', 'linear').data('timestamp', current_drawing.timestamp).dblclick(load_drawing).submit(delete_drawing);
 		}
-	});
-	
-	socket.on('update friends', function(friends){
-		user_data.friends = friends;
-		list_friends();
 	});
 	
    function load_drawing(e){
@@ -761,53 +711,26 @@ $(document).ready(function() {
 		socket.emit('delete', user_data.username + ':' + $(this).data('timestamp'));
    }
 	$('canvas.board').on('mousedown', enable_draw);
-	$('.login-dialog>a:last').on('click', function(e){
-		$(this).parent().hide();
-	});
 	
 	$('.login').on('submit', function(e){
 		e.preventDefault();
-		socket.emit('login', {username: $('.login>input[type="email"]').val(), password: $('.login>input[type="password"]').val()});
+		socket.emit('login', {username: $('.login>input[type="text"]').val(), password: $('.login>input[type="password"]').val()});
 	});
 	
-	$('.login-dialog>a:first').first().on('click', function(e){
+	$('.login-dialog input[value="Sign Up"]').on('click', function(e){
+		e.preventDefault();
 		console.log('signup');
-		socket.emit('sign up', {username: $('.login>input[type="email"]').val(), password: $('.login>input[type="password"]').val()});
+		socket.emit('sign up', {username: $('.login>input[type="text"]').val(), password: $('.login>input[type="password"]').val()});
+	});
+
+	$('.login-dialog .close').on('click', function(e){
+		$('.login-dialog').hide();
 	});
 	
 	$('.mini-login').on('click', function(e){
 		$('.login-dialog').show();
 	});
 	
-	$('.add-friend').on('submit', function(e){
-		e.preventDefault();
-		socket.emit('request friend', $('.add-friend>input').val());
-	});
-	
-	function list_friends(){
-		var i;
-		for(i=0;i<user_data.friends.length;i++){
-			if(user_data.friends[i].status == 'pending'){
-				$('.friend-list').append('<div>Friendship with ' + user_data.friends[i].user + ' is pending</div>');
-			}
-			else if(user_data.friends[i].status == 'request'){
-				$('.friend-list').append('<div>' + user_data.friends[i].user + ' would like to be your friend<br><a>yes</a> or <a>no</a>?</div>');
-				$('.friend-list>div').last().data('user', user_data.friends[i].user).children().first().on('click', accept_friend);
-				$('.friend-list>div').last().children().last().on('click', deny_friend);
-			}
-			else{
-				$('.friend-list').append('<div>' + user_data.friends[i].user + ': ' + user_data.friends[i].status + '</div>');
-			}
-		}
-	};
-	
-	function accept_friend(e){
-		
-	}
-	
-	function deny_friend(e){
-		
-	}
 	// Triggers
 	
 	$(window).resize();
