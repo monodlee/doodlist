@@ -28,7 +28,7 @@ $(document).ready(function() {
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId      : '468916983177004', // App ID
-			channelUrl : '//www.rhetorical-paper-58.a.pogoapp.com/channel.html', // Channel File
+			channelUrl : '//www.cryptic-falls-7546.herokuapp.com//channel.html', // Channel File
 			status     : true, // check login status
 			cookie     : true, // enable cookies to allow the server to access the session
 			xfbml      : true  // parse XFBML
