@@ -1,12 +1,3 @@
-  // Load the SDK Asynchronously
-/*(function(d){
-	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-	if (d.getElementById(id)) {return;}
-	js = d.createElement('script'); js.id = id; js.async = true;
-	js.src = "//connect.facebook.net/en_US/all.js";
-	ref.parentNode.insertBefore(js, ref);
-}(document));*/
-
 var user_data;
 
 $(document).ready(function() {
@@ -36,6 +27,7 @@ $(document).ready(function() {
 		// Additional init code here
 
 		FB.Event.subscribe('auth.authResponseChange', function(response){
+			console.log(response);
 			if (response.status === 'connected') {
 				// connected
 				socket.emit('fb login', response.authResponse.userID);
@@ -43,6 +35,7 @@ $(document).ready(function() {
 				// not_authorized
 			} else {
 			// not_logged_in
+				logout();
 			}
 		});
 	});
@@ -90,7 +83,15 @@ $(document).ready(function() {
 	});
 
 	$('.logout').click( function(e){
-		logout();
+		FB.getLoginStatus(function(response) {
+			if (response.status === 'connected') {
+				// connected
+				FB.logout(function(response){
+				});
+			}else {
+				logout();
+			}
+		});
 	});
 
 	function logout(){
@@ -99,16 +100,6 @@ $(document).ready(function() {
 		$('.logout').hide();
 		$('.mini-login').show();
 		$('.archive').html('');
-		FB.getLoginStatus(function(response) {
-			if (response.status === 'connected') {
-				// connected
-				FB.logout(function(response){
-				});
-			}else {
-				// not_logged_in
-				console.log('logged out of scridoodle server');
-			}
-		});
 	}
 
 	$('.color').click( function(e) {
