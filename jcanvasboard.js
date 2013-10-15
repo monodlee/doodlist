@@ -38,7 +38,7 @@ $(document).ready(function() {
 		FB.Event.subscribe('auth.authResponseChange', function(response){
 			if (response.status === 'connected') {
 				// connected
-				socket.emit('fb login', response.access_token.authResponse.userID);
+				socket.emit('fb login', response.authResponse.userID);
 			} else if (response.status === 'not_authorized') {
 				// not_authorized
 			} else {
