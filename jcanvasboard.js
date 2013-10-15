@@ -1,11 +1,11 @@
   // Load the SDK Asynchronously
-(function(d){
+/*(function(d){
 	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
 	if (d.getElementById(id)) {return;}
 	js = d.createElement('script'); js.id = id; js.async = true;
 	js.src = "//connect.facebook.net/en_US/all.js";
 	ref.parentNode.insertBefore(js, ref);
-}(document));
+}(document));*/
 
 var user_data;
 
@@ -23,9 +23,8 @@ $(document).ready(function() {
 	var rightgap = 0;
 	var bottomgap = 0;
 	var saved_drawings = {};
-
-		// Additional JS functions here
-	window.fbAsyncInit = function() {
+	$.ajaxSetup({ cache: true });
+	$.getScript('//connect.facebook.net/en_UK/all.js', function(){
 		FB.init({
 			appId      : '468916983177004', // App ID
 			channelUrl : '//www.cryptic-falls-7546.herokuapp.com//channel.html', // Channel File
@@ -42,12 +41,11 @@ $(document).ready(function() {
 				socket.emit('fb login', access_token.authResponse.userID);
 			} else if (response.status === 'not_authorized') {
 				// not_authorized
-				alert('website not authorized by user');
 			} else {
 			// not_logged_in
 			}
 		});
-	};
+	});
 
 	//Initializers
 
