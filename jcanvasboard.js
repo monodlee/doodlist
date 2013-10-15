@@ -30,7 +30,9 @@ $(document).ready(function() {
 			console.log(response);
 			if (response.status === 'connected') {
 				// connected
-				socket.emit('fb login', response.authResponse.userID);
+				if($('.archive').html() === ''){
+					socket.emit('fb login', response.authResponse.userID);
+				}
 			} else if (response.status === 'not_authorized') {
 				// not_authorized
 			} else {
