@@ -499,14 +499,13 @@ $(document).ready(function() {
 	
 		//Text
 		
+	var text_box_padding_border_sum = parseInt($('.text-box').css('padding-left'), 10) * 2 + parseInt($('.text-box').css('border-left-width'), 10) * 2;
 	var text_entry = function(e){
 		write_data.x = e.pageX - canvas_offset.left;
 		write_data.y = e.pageY - canvas_offset.top;
-		var text_box_padding_border_sum = parseInt($('.text-box').css('padding-left'), 10) * 2 + parseInt($('.text-box').css('border-left-width'), 10) * 2;
 		var area_max_width = $('canvas.board').width() - write_data.x - text_box_padding_border_sum;
 		var area_max_height = $('canvas.board').height() - write_data.y - text_box_padding_border_sum;
-		$('.text-box').resizable('option', 'maxWidth', area_max_width);
-		$('.text-box').resizable('option', 'maxHeight', area_max_height);
+		$('.text-box').resizable('option', {'maxWidth': area_max_width, 'maxHeight': area_max_height});
 		$('.text-box').css({'maxWidth': area_max_width, 'maxHeight': area_max_height, 'top': write_data.y + canvas_border, 'left': write_data.x + canvas_border});
 		write_data.x = (write_data.x + 3) / write_data.scale + leftgap;
 		write_data.y = (write_data.y  + 3) / write_data.scale + topgap;
@@ -515,6 +514,7 @@ $(document).ready(function() {
 	};
 	
 	var draw_text = function(paragraph){
+		console.log('texting');
 		$("canvas.board").drawText({
 			fillStyle: paragraph.color,
 			strokeWidth: 0,
