@@ -73,9 +73,9 @@ io.sockets.on('connection', function(socket){
 				socket.emit('login', reply);
 			}
 			else{
-				db.createUser(userID, {username: userID, friends: []}, function(err, reply){
+				db.createUser(userId, {username: userId, friends: []}, function(err, reply){
 					if(reply){
-						socket.emit('login', {username: userID, friends: []});
+						socket.emit('login', {username: userId, friends: []});
 					}
 				});
 			}
