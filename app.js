@@ -48,7 +48,7 @@ io.sockets.on('connection', function(socket){
 				});
 			}
 			else{
-				console.log("failed login", username);
+				socket.emit('invalid login');
 			}
 		});
 	});
@@ -119,7 +119,7 @@ io.sockets.on('connection', function(socket){
 		db.getDrawingByID(dwid, function(err, reply){
 			if(reply){
 				console.log('load success');
-				socket.broadcast.emit('refresh', reply);
+				socket.broadcast.emit('refresh', reply.data);
 			}
 			else{
 				console.log('load failure');
@@ -136,6 +136,7 @@ io.sockets.on('connection', function(socket){
 			}
 		});
 	});
+
 });
 
 app.get('/', function(req, res) {

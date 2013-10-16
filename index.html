@@ -6,111 +6,111 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	</head>
 
-<body>
-	<div id="fb-root"></div>
-	<script src="js/jquery-1.9.0.js"></script>
-	<script src="js/jquery-ui-1.10.0.custom.min.js"></script>
-	<script src="jcanvas.min.js"></script>
-	<script src="socket.io/lib/socket.io.js"></script>
-	<script src="jcanvasboard.js"></script>
-	<article class="login-dialog">
-		<div class="close">X</div>
-		<div class="fb-login-button" data-size="xlarge"></div>
-		<br>
-		<br>
-		or
-		<br>
-		<br>
-		<form class="login">
-			Email: <input type="text" required="required"> Password: <input type="password" required="required">
+	<body>
+		<div id="fb-root"></div>
+		<article class="login-dialog">
+			<div class="close">X</div>
+			<div class="fb-login-button" data-size="xlarge"></div>
 			<br>
 			<br>
-			<input type="submit" value="Log In">
-			<input type="button" value="Sign Up">
-		</form>
-	</article>
-	<div class="logout">logout</div>
-	<div class="mini-login">login</div>
-	<h1>DOODList</h1>
-	<article class="photo-browser">
-	</article>
-	<article class="easle">
-		<canvas class="board" width="800px" height="400px"></canvas>
-		<form class="text-box">
-			<textarea rows="4" cols="30" placeholder="Hello Friend"></textarea>
-			<input type="submit" value="Write">
-		</form>
-		<form class="image-box">
-			<img src="">
-			<input type="submit" value="Stamp">
-		</form>
-		<section class="optional-toolbar">
-			<section class="text-tools">
-				<header class="tooltab"><b>T</b></header>
-				<a class="bold" href="#">B</a>
-				<a class="italic" href="#">I</a>
-				<a class="font selected" href="#">Arial</a>
-				<a class="font" href="#">Flux</a>
-				<a class="font" href="#">Times</a>
-				<a class="font" href="#">Georgia</a>
-				<a class="font" href="#">Courier</a>
+			or
+			<br>
+			<br>
+			<form class="login">
+				Email: <input type="text" required="required"> Password: <input type="password" required="required">
+				<br>
+				<br>
+				<input type="submit" value="Log In">
+				<input type="button" value="Sign Up">
+			</form>
+		</article>
+		<div class="logout">logout</div>
+		<div class="mini-login">login</div>
+		<h1>DOODList</h1>
+		<article class="photo-browser">
+		</article>
+		<article class="easle">
+			<canvas class="board" width="800px" height="400px"></canvas>
+			<form class="text-box">
+				<textarea rows="4" cols="30" placeholder="Hello Friend"></textarea>
+				<input type="submit" value="Write">
+			</form>
+			<form class="image-box">
+				<img src="">
+				<input type="submit" value="Stamp">
+			</form>
+			<section class="optional-toolbar">
+				<section class="text-tools">
+					<header class="tooltab"><b>T</b></header>
+					<a class="bold" href="#">B</a>
+					<a class="italic" href="#">I</a>
+					<a class="font selected" href="#">Arial</a>
+					<a class="font" href="#">Flux</a>
+					<a class="font" href="#">Times</a>
+					<a class="font" href="#">Georgia</a>
+					<a class="font" href="#">Courier</a>
+				</section>
+				<section class="zoom-tools">
+					<header class="tooltab"><img src="images/Zoom.png" alt="Z"></header>
+					<a class="zoom-in" href="#"><img src="images/zoom-in.png" alt="+"></a>
+					<a class="zoom-out" href="#"><img src="images/zoom-out.png" alt="-"></a>
+					<a class="drag" href="#"><img src="images/drag.png" alt="D"></a>
+					<a class="reset" href="#"><img src="images/unscale.png" alt="R"></a>
+				</section>
+				<section class="image-tools">
+					<header class="tooltab"><img src="images/upload.png" alt="I"></header>
+					<a class="upload"><img src="images/upload_photo.png" alt="Import"></a>
+					<form class="background-upload" method="post" enctype="multipart/form-data">
+						<input type="file" accept="image/*">
+					</form>
+					<div class="uploaded-images"></div>
+				</section>
+				<section class="archive-tools">
+					<header class="tooltab"><img src="images/album.png" alt="A"></header>
+					<a class="save" href="#"><img src="images/save.png" alt="S"></a>
+					<div class="archive" ></div>
+				</section>
+				<section class="settings">
+					<header class="tooltab"><img src="images/settings.png" alt="S"></header>
+				</section>
 			</section>
-			<section class="zoom-tools">
-				<header class="tooltab"><img src="images/Zoom.png" alt="Z"></header>
-				<a class="zoom-in" href="#"><img src="images/zoom-in.png" alt="+"></a>
-				<a class="zoom-out" href="#"><img src="images/zoom-out.png" alt="-"></a>
-				<a class="drag" href="#"><img src="images/drag.png" alt="D"></a>
-				<a class="reset" href="#"><img src="images/unscale.png" alt="R"></a>
+			<section class="common-toolbar">
+				<section class="brushes">
+					<a class="size selected" data-size="7" href="#"></a>
+					<a class="size" data-size="21" href="#"></a>
+					<a class="size" data-size="35" href="#"></a>
+					<a class="size" data-size="51" href="#"></a>
+					<a class="size" data-size="65" href="#"></a>
+					<a class="size" data-size="81" href="#"></a>
+				</section>
+				<section class="font-sizes">
+					<a class="size selected" data-size="20" href="#">A</a>
+					<a class="size" data-size="30" href="#">A</a>
+					<a class="size" data-size="40" href="#">A</a>
+					<a class="size" data-size="55" href="#">A</a>
+					<a class="size" data-size="70" href="#">A</a>
+					<a class="size" data-size="90" href="#">A</a>
+				</section>
+				<section class="deletion-tools">
+					<a class="undo" href="#"><img src="images/undo.png" alt="UNDO"></a>
+					<a class="clear" href="#"><img src="images/clear.png" alt = "CLEAR"></a>
+				</section>
 			</section>
-			<section class="image-tools">
-				<header class="tooltab"><img src="images/upload.png" alt="I"></header>
-				<a class="upload"><img src="images/upload_photo.png" alt="Import"></a>
-				<form class="background-upload" method="post" enctype="multipart/form-data">
-					<input type="file" accept="image/*">
-				</form>
-				<div class="uploaded-images"></div>
+			<section class="pallete">
+				<a class="color selected" href="#"></a>
+				<a class="color" href="#"></a>
+				<a class="color" href="#"></a>
+				<a class="color" href="#"></a>
+				<a class="color" href="#"></a>
+				<a class="color" href="#"></a>
+				<a class="color" href="#"></a>
+				<a class="color" href="#"></a>
 			</section>
-			<section class="archive-tools">
-				<header class="tooltab"><img src="images/album.png" alt="A"></header>
-				<a class="save" href="#"><img src="images/save.png" alt="S"></a>
-				<div class="archive" ></div>
-			</section>
-			<section class="settings">
-				<header class="tooltab"><img src="images/settings.png" alt="S"></header>
-			</section>
-		</section>
-		<section class="common-toolbar">
-			<section class="brushes">
-				<a class="size selected" data-size="7" href="#"></a>
-				<a class="size" data-size="21" href="#"></a>
-				<a class="size" data-size="35" href="#"></a>
-				<a class="size" data-size="51" href="#"></a>
-				<a class="size" data-size="65" href="#"></a>
-				<a class="size" data-size="81" href="#"></a>
-			</section>
-			<section class="font-sizes">
-				<a class="size selected" data-size="20" href="#">A</a>
-				<a class="size" data-size="30" href="#">A</a>
-				<a class="size" data-size="40" href="#">A</a>
-				<a class="size" data-size="55" href="#">A</a>
-				<a class="size" data-size="70" href="#">A</a>
-				<a class="size" data-size="90" href="#">A</a>
-			</section>
-			<section class="deletion-tools">
-				<a class="undo" href="#"><img src="images/undo.png" alt="UNDO"></a>
-				<a class="clear" href="#"><img src="images/clear.png" alt = "CLEAR"></a>
-			</section>
-		</section>
-		<section class="pallete">
-			<a class="color selected" href="#"></a>
-			<a class="color" href="#"></a>
-			<a class="color" href="#"></a>
-			<a class="color" href="#"></a>
-			<a class="color" href="#"></a>
-			<a class="color" href="#"></a>
-			<a class="color" href="#"></a>
-			<a class="color" href="#"></a>
-		</section>
-</article>
-</body>
+		</article>
+		<script src="js/jquery-1.9.0.js"></script>
+		<script src="js/jquery-ui-1.10.0.custom.min.js"></script>
+		<script src="jcanvas.min.js"></script>
+		<script src="socket.io/lib/socket.io.js"></script>
+		<script src="jcanvasboard.js"></script>
+	</body>
 </html>
